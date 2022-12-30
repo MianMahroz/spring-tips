@@ -1,5 +1,4 @@
 management.endpoint.health.show-details: always
-topic.name: new-orders
 
 spring:
   kafka:
@@ -12,9 +11,7 @@ spring:
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
-  output:
-    ansi:
-      enabled: always
+
   sql:
     init:
       mode: never
@@ -44,13 +41,3 @@ management:
         enabled: true
 
 
-#testcontainers:
-#  postgresql:
-#    enabled: true
-#    image: postgres:14-alpine
-#  kafka:
-#    enabled: true
-#    image: confluentinc/cp-kafka:5.4.6
-#  redis:
-#    enabled: true
-#    image: redis:6-alpine
