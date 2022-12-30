@@ -5,12 +5,12 @@ CREATE TABLE IF NOT EXISTS orders(
                                     PRIMARY KEY (id)
 );
 
---INSERT
---INTO orders (product_id,qty)
---VALUES (299,2)
---ON CONFLICT do nothing;
---
---INSERT
---INTO orders (product_id, qty)
---VALUES (100,3)
---ON CONFLICT do nothing;
+INSERT
+INTO orders (product_id,qty)
+VALUES (299,2)
+ON CONFLICT do nothing;
+
+INSERT
+INTO orders (product_id, qty)
+VALUES (100,3)
+ON CONFLICT do nothing;
