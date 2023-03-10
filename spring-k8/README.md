@@ -25,7 +25,7 @@ minikube dashboard
 - kubectl get all
 
 #### CREATE SSH TUNNEL TO ACCESS APPLICATION INSIDE K8 MINIKUBE CLUSTER
-kubectl port-forward svc/app 8080:8080
+- kubectl port-forward svc/app 8080:8080
 
 
 
