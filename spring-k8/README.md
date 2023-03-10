@@ -1,5 +1,11 @@
 # SPRING BOOT WITH KUBERNETES
 
+#### PRE-REQUISITES
+- Docker
+- Minikube
+- Kubectl 
+
+
 #### CREATING DOCKER IMAGE
 - mvnw clean install -DskipTests     
 - docker build -t app:1.0 .
