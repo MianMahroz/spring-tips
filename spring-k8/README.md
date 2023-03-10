@@ -24,6 +24,9 @@ minikube dashboard
 - kubectl apply -f deployment.yaml
 - kubectl get all
 
+#### CREATE SSH TUNNEL TO ACCESS APPLICATION INSIDE K8 MINIKUBE CLUSTER
+kubectl port-forward svc/app 8080:8080
+
 
 
 ![img.png](img.png)
@@ -33,9 +36,6 @@ minikube dashboard
 
 
 ![img_2.png](img_2.png)
-
-#### CREATE SSH TUNNEL TO ACCESS APPLICATION INSIDE K8 MINIKUBE CLUSTER
-kubectl port-forward svc/app 8080:8080
 
 
 
