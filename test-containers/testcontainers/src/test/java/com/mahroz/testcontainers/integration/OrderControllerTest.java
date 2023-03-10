@@ -31,12 +31,12 @@ public class OrderControllerTest  extends  AbstractIntegrationTest{
                 .when().post("/saveOrder")
                 .then().assertThat().statusCode(200);
 
-            given(requestSpecification)
-                    .when().get("/orders")
-                    .then().assertThat().statusCode(200)
-                    .and().contentType(ContentType.JSON)
-                    .body("size()",equalTo(1))
-                    .body("get(0).productId",equalTo(90));
+        given(requestSpecification)
+                .when().get("/orders")
+                .then().assertThat().statusCode(200)
+                .and().contentType(ContentType.JSON)
+                .body("size()",equalTo(1))
+                .body("get(0).productId",equalTo(90));
 
     }
 
