@@ -1,0 +1,16 @@
+
+replicaCount: 1
+
+image:
+  repository: mianmahroz/delivery-service
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8083
+  name: delivery
+  targetport: 8083
+
+container:
+  name: delivery-service
+
