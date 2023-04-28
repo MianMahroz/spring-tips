@@ -5,8 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @FeignClient(name = "delivery-service",url = "http://delivery:8083")
+//@FeignClient(name = "DELIVERY-SERVICE")
 public interface DeliveryServiceClient {
 
-    @GetMapping("/processDelivery")
+    @GetMapping("/delivery/processDelivery")
     ResponseEntity<String> processOrderDelivery();
 }

@@ -12,6 +12,10 @@ build:
       context: delivery-service
       docker:
         dockerfile: Dockerfile
+    - image: mianmahroz/gateway-service
+      context: gateway-service
+      docker:
+        dockerfile: Dockerfile
 deploy:
   helm:
     releases:
@@ -19,4 +23,8 @@ deploy:
         chartPath: ./order-service/order-helm
       - name: delivery-helm
         chartPath: ./delivery-service/delivery-helm
+      - name: gateway-helm
+        chartPath: ./gateway-service/gateway-helm
+
+
 

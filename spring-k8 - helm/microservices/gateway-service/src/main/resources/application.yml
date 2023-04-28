@@ -1,0 +1,24 @@
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: delivery
+#          uri: lb://DELIVERY
+#          predicates:
+#            - Path=/delivery/**
+#        - id: order-service
+#          uri: lb://ORDER-SERVICE
+#          predicates:
+#            - Path=/order/**
+#
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+management:
+  endpoint:
+    gateway:
+      enabled: true
