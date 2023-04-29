@@ -12,6 +12,10 @@ build:
       context: delivery-service
       docker:
         dockerfile: Dockerfile
+    - image: mianmahroz/identity-service
+      context: identity-service
+      docker:
+        dockerfile: Dockerfile
     - image: mianmahroz/gateway-service
       context: gateway-service
       docker:
@@ -23,6 +27,8 @@ deploy:
         chartPath: ./order-service/order-helm
       - name: delivery-helm
         chartPath: ./delivery-service/delivery-helm
+      - name: identity-helm
+        chartPath: ./identity-service/identity-helm
       - name: gateway-helm
         chartPath: ./gateway-service/gateway-helm
 
