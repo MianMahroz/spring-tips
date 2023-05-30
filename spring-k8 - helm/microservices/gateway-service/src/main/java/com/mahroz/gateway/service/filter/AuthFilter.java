@@ -10,6 +10,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 @Component
 @Slf4j
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
@@ -41,13 +43,13 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                 }
                 try {
                     Mono<String> res = authClient.validateToken(authHeader);
-                    res.subscribe(r->{
-                        if(r.equalsIgnoreCase("Token is valid")){
+
+                        if(Objects.requireNonNull(res.block()).equalsIgnoreCase("Token is valid")){
                             log.info("TOKEN IS VALID");
                         }else {
                             throw new RuntimeException("un authorized access to application");
                         }
-                    });
+
                 } catch (Exception e) {
                     System.out.println("invalid access...!");
                     throw new RuntimeException("un authorized access to application");

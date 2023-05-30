@@ -15,11 +15,11 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class AuthConfig {
+public class AuthConfig  {
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return new CustomUserDetailsService();
+        return new UserDetailsServiceImpl();
     }
 
 
