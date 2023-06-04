@@ -4,14 +4,6 @@ metadata:
   name: using-kubernates
 build:
   artifacts:
-    - image: mianmahroz/order-service
-      context: order-service
-      docker:
-        dockerfile: Dockerfile
-    - image: mianmahroz/delivery-service
-      context: delivery-service
-      docker:
-        dockerfile: Dockerfile
     - image: mianmahroz/identity-service
       context: identity-service
       docker:
@@ -27,14 +19,10 @@ build:
 deploy:
   helm:
     releases:
-#      - name: order-helm
-#        chartPath: ./order-service/order-helm
-#      - name: delivery-helm
-#        chartPath: ./delivery-service/delivery-helm
-#      - name: identity-helm
-#        chartPath: ./identity-service/identity-helm
-#      - name: gateway-helm
-#        chartPath: ./gateway-service/gateway-helm
+      - name: identity-helm
+        chartPath: ./identity-service/identity-helm
+      - name: gateway-helm
+        chartPath: ./gateway-service/gateway-helm
       - name: app-helm
         chartPath: ./app-ui/app-helm
 
