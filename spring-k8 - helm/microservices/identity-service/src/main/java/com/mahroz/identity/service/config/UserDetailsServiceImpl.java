@@ -18,6 +18,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return  userList.stream().filter(u->u.getUsername().equalsIgnoreCase(username)).findFirst().get();
+        return  userList
+                .stream()
+                .filter(u->u.getUsername().equalsIgnoreCase(username))
+                .findFirst()
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
     }
 }

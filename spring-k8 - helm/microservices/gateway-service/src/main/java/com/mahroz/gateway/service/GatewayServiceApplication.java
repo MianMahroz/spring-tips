@@ -21,7 +21,6 @@ import java.util.Arrays;
 
 @SpringBootApplication
 @EnableFeignClients
-//@CrossOrigin(origins = "http://localhost:4200")
 public class GatewayServiceApplication {
 
 

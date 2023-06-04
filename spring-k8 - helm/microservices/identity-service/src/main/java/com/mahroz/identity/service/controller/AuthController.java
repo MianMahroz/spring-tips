@@ -2,14 +2,12 @@ package com.mahroz.identity.service.controller;
 
 
 import com.mahroz.identity.service.config.CustomUserDetails;
-import com.mahroz.identity.service.config.UserDetailsServiceImpl;
 import com.mahroz.identity.service.dto.AuthRequest;
-import com.mahroz.identity.service.dto.RefreshTokenDto;
 import com.mahroz.identity.service.dto.UserInfoDto;
 import com.mahroz.identity.service.service.JwtService;
 import com.mahroz.identity.service.service.RefreshTokenService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.boot.web.server.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +15,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-//@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200",allowCredentials = "true")
 public class AuthController {
 
     private JwtService jwtService;
@@ -36,35 +35,40 @@ public class AuthController {
         this.refreshTokenService = refreshTokenService;
     }
 
-    @GetMapping("/currentUser")
-    public String userDetails(@CookieValue(name="JSESSIONID") String JSESSIONID) {
 
-        return JSESSIONID;
+    @GetMapping("/currentUser")
+    public UserDetails userDetails(HttpServletRequest request) {
+        UserDetails userDetails =
+                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return userDetails;
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<UserInfoDto> signin(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<UserInfoDto> signin(@RequestBody AuthRequest authRequest, HttpServletResponse httpServletResponse) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         ResponseCookie jwtCookie = jwtService.generateJwtCookie(userDetails);
 
-        RefreshTokenDto refreshToken = refreshTokenService.createRefreshToken(userDetails.getUsername());
-
-        ResponseCookie jwtRefreshCookie = jwtService.generateRefreshJwtCookie(refreshToken.refreshToken());
-
+        /**
+         *  For refresh token
+            RefreshTokenDto refreshToken = refreshTokenService.createRefreshToken(userDetails.getUsername());
+            ResponseCookie jwtRefreshCookie = jwtService.generateRefreshJwtCookie(refreshToken.refreshToken());
+         **/
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .header(HttpHeaders.SET_COOKIE ,jwtRefreshCookie.toString())
                 .body(new UserInfoDto(userDetails.getUsername(),"xyz@org.com"));
+
     }
 
     @GetMapping("/validate")
     public String validateToken(@RequestParam("token") String token) {
         jwtService.validateToken(token);
-        return "Token is valid";
+        return "Valid";
     }
 
 
@@ -76,11 +80,11 @@ public class AuthController {
         }
 
         ResponseCookie jwtCookie = jwtService.getCleanJwtCookie();
-        ResponseCookie jwtRefreshCookie = jwtService.getCleanJwtRefreshCookie();
+        // ResponseCookie jwtRefreshCookie = jwtService.getCleanJwtRefreshCookie();
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
+//                .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
                 .body("You've been signed out!");
     }
 

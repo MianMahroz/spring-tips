@@ -58,8 +58,6 @@
         </dependencies>
     </dependencyManagement>
     <modules>
-        <module>order-service</module>
-        <module>delivery-service</module>
         <module>identity-service</module>
         <module>gateway-service</module>
 

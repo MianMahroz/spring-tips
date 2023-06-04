@@ -19,6 +19,8 @@ public class AuthClient {
 
         Mono<String> response = builder()
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .defaultHeaders(httpHeaders -> httpHeaders.setBearerAuth(token))
+                    .defaultCookie("JSESSIONID",token)
                     .baseUrl(AUTH_CLIENT_URL)
                     .build()
                     .get()
@@ -26,7 +28,7 @@ public class AuthClient {
                     .retrieve()
                     .bodyToMono(String.class);
 
-        return  response;
+            return  response;
     }
 
 }

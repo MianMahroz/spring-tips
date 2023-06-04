@@ -13,14 +13,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-      var req= {
-        username:"Alex",
-        password:"abcdef"
-      }
-        this.authService.signin(req).subscribe(res=>{
-
-      });
-
+      //
   }
 
   getUserDetails(){
@@ -29,5 +22,26 @@ export class AppComponent implements OnInit{
 
     });
   }
+
+  signin(){
+
+    var req= {
+        username:"Alex",
+        password:"abcdef"
+      }
+        this.authService.signin(req).subscribe(res=>{
+
+        });
+
+  }
+
+  signout(){
+
+        this.authService.signout({}).subscribe(res=>{
+
+        });
+
+  }
+  
 
 }

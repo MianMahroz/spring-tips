@@ -2,12 +2,15 @@ package com.mahroz.gateway.service.filter;
 
 
 import com.mahroz.gateway.service.client.AuthClient;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
@@ -32,19 +35,18 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
             if (validator.isSecured.test(exchange.getRequest())) {
-                //header contains token or not
-                if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                    throw new RuntimeException("missing authorization header");
-                }
 
-                String authHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-                if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                    authHeader = authHeader.substring(7);
-                }
+                 if (!exchange.getRequest().getCookies().containsKey("JSESSIONID")) {
+                    throw new RuntimeException("missing JSESSIONID COOKIE");
+                 }
+
+
                 try {
-                    Mono<String> res = authClient.validateToken(authHeader);
+                    String authToken = exchange.getRequest().getCookies().get("JSESSIONID").get(0).getValue();
 
-                        if(Objects.requireNonNull(res.block()).equalsIgnoreCase("Token is valid")){
+                    Mono<String> res = authClient.validateToken(authToken);
+
+                        if(Objects.requireNonNull(res.block()).equalsIgnoreCase("valid")){
                             log.info("TOKEN IS VALID");
                         }else {
                             throw new RuntimeException("un authorized access to application");
