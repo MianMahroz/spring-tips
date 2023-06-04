@@ -25,6 +25,3 @@ deploy:
         chartPath: ./gateway-service/gateway-helm
       - name: app-helm
         chartPath: ./app-ui/app-helm
-
-
-
