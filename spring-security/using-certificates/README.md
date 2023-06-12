@@ -37,3 +37,10 @@
 
 ![img_8.png](img_8.png)
 
+
+https://localhost:8081/client/getInfo
+
+![img_9.png](img_9.png)
+
+![img_10.png](img_10.png)
+

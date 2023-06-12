@@ -27,12 +27,14 @@ public class OrderController {
      * @return secure response received from server
      */
 
-    @GetMapping
+    @GetMapping("/getInfo")
     public String getDataFromServer() {
         Mono<String> dateFromServer = webClient.get()
                 .uri("https://localhost:8082/server")
                 .retrieve().bodyToMono(String.class);
-        return dateFromServer.block();
+
+        dateFromServer.subscribe(data -> System.out.println("PROCESSING COMPLETED." + data));
+        return "Processing.....";
     }
 
 }
