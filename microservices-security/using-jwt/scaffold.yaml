@@ -1,0 +1,27 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: using-kubernates
+build:
+  artifacts:
+    - image: mianmahroz/identity-service
+      context: identity-service
+      docker:
+        dockerfile: Dockerfile
+    - image: mianmahroz/gateway-service
+      context: gateway-service
+      docker:
+        dockerfile: Dockerfile
+    - image: mianmahroz/app-ui
+      context: app-ui
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  helm:
+    releases:
+      - name: identity-helm
+        chartPath: ./identity-service/identity-helm
+      - name: gateway-helm
+        chartPath: ./gateway-service/gateway-helm
+      - name: app-helm
+        chartPath: ./app-ui/app-helm
