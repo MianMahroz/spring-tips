@@ -1,0 +1,16 @@
+
+replicaCount: 1
+
+image:
+  repository: mianmahroz/app-ui
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+  name: app
+  targetport: 80
+
+container:
+  name: app-ui
+
