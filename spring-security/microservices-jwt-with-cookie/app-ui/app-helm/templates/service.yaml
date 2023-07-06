@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }} 
+  labels:
+    {{- include "app-helm.labels" . | nindent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetport }}
+      name: http
+  selector:
+    {{- include "app-helm.selectorLabels" . | nindent 4 }}
