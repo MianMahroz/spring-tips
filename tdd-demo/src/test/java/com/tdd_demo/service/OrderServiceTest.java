@@ -17,28 +17,21 @@ import java.util.List;
 
 public class OrderServiceTest {
 
-    @Mock
+
+
     private OrderService orderService;
 
 
     @BeforeEach
     public void beforeEach() {
+
         MockitoAnnotations.openMocks(this);
+        orderService = new OrderServiceImpl();
     }
 
     @Test
     public void calculateTotalBundleAmountByUserId_test() {
 
-
-        var availableProducts = List.of(
-                new Product(66L, "PEPSI", 10),
-                new Product(77L, "LAYS", 20),
-                new Product(88L, "COKE", 12)
-        );
-        var availableBundles = List.of(
-                new Bundle(1, List.of(66L, 77L), 10.0),
-                new Bundle(1, List.of(88L, 77L), 20.0)
-        );
 
         var orders = new ArrayList<ProductOrder>();
 
